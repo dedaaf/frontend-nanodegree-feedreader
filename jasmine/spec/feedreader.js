@@ -26,7 +26,6 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* Test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
@@ -49,18 +48,15 @@ $(function() {
                 expect(feed.name.length).not.toBe(0);
             });
         });
-
-
-
-
     });
-
 
     /* Test suite named "The menu" */
     describe('The Menu', function() {
 
         var btn = $('.menu-icon-link');
-        var body = $('body').attr('class','menu-hidden');
+
+        //this class hides the menu, so if it is not available the menu is not hidden
+        var body = $('body').hasClass('menu-hidden');
 
         /* Test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -68,7 +64,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it('The slide menu is hidden by default',function(){
-            expect( $('body').attr('class') ).toEqual('menu-hidden') ;
+            expect( body).toBe(true);
         });
 
         /* Test that ensures the menu changes
@@ -82,13 +78,10 @@ $(function() {
             btn.click();
             expect($('body').attr('class')).toEqual('menu-hidden');
         });
-
     });
 
     /* Test suite named "Initial Entries" */
     describe('Initial Entries', function() {
-
-
 
         /* Test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -99,7 +92,7 @@ $(function() {
         beforeEach(function(done){
             loadFeed(0,function(){//activate the feed
                 done();
-           });
+            });
         });
 
         it('at least a single entry element is found', function(){
@@ -107,25 +100,45 @@ $(function() {
         });
     });
 
-
     /* Test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-        beforeEach(function(done){
+        /* This function checks if a new news item is loaded
+                 */
+       var feed_title;
+       var feed_title_new;
+
+        beforeEach(function(done) {
             loadFeed(0,function(){//activate the feed
                 done();
-           });
-        });
 
-        it('New Feed is loaded ', function (done){
-            var entry = $('.feed .entry')[0];
-            expect(entry).toBeGreaterThan('');
-            done();
+            });
+            feed_title = $('.entry h2')[0].innerText;
+            console.log('First title: ', feed_title);
 
         });
+
+        it("New Feed is loaded", function(done) {
+
+            loadFeed(0,function(){//activate the feed
+                done();
+            });
+            var feed_title_new = $('.entry h2')[0].innerText;
+
+            expect(feed_title_new).toEqual (feed_title);
+            console.log('Second title: ', feed_title_new);
+        });
+
+
+
+
+        // it('New Feed is loaded ', function (done){
+        //    loadFeed(0,function(){//activate the feed
+        //         done();
+        //     });
+        //     newValue =
+
+        //     expect(oldValue).toEqual (newValue);
+        // });
     });
 
 }());
