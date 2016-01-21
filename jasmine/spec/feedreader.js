@@ -63,7 +63,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it('The slide menu is hidden by default', function() {
-            expect(body).toBe(true);
+            expect(body).toBeTruthy();
         });
 
         /* Test that ensures the menu changes
@@ -71,11 +71,15 @@ $(function() {
          * should have two expectations: does the menu display when
          * clicked and does it hide when clicked again.
          */
-        it('Menu toggles when icon is clicked', function() {
-            btn.click();
-            expect($('body').attr('class')).toEqual('');
-            btn.click();
-            expect($('body').attr('class')).toEqual('menu-hidden');
+        it('toggles when icon is clicked', function() {
+
+            btn.click(); //show menu
+            body = $('body').hasClass('');
+            expect(body).toBeTruthy();
+
+            btn.click(); //hide menu
+            body = $('body').hasClass('menu-hidden');
+            expect(body).toBeTruthy();
         });
     });
 
@@ -101,43 +105,25 @@ $(function() {
 
     /* Test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
-        /* This function checks if a new news item is loaded
-         */
-        var feed_title;
-        var feed_title_new;
-
+        /* This function checks if a new feed is loaded
+        */
+        var firstFeed;
+        var feedNew;
         beforeEach(function(done) {
             loadFeed(0, function() { //activate the feed
+                firstFeed = $('.entry:eq(0)').text();
                 done();
-
             });
-            feed_title = $('.entry h2')[0].innerText;
-            console.log('First title: ', feed_title);
-
         });
 
         it("New Feed is loaded", function(done) {
 
-            loadFeed(0, function() { //activate the feed
+            loadFeed(1, function() { //activate the feed
+                feedNew = $('.entry:eq(0)').text();
+                expect(firstFeed).not.toEqual(feedNew);
                 done();
             });
-            var feed_title_new = $('.entry h2')[0].innerText;
-
-            expect(feed_title_new).toEqual(feed_title);
-            console.log('Second title: ', feed_title_new);
         });
-
-
-
-
-        // it('New Feed is loaded ', function (done){
-        //    loadFeed(0,function(){//activate the feed
-        //         done();
-        //     });
-        //     newValue =
-
-        //     expect(oldValue).toEqual (newValue);
-        // });
     });
 
 }());

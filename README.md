@@ -4,6 +4,13 @@
 ## Documentation
 Test module written with Jasmine.JS to look at the feed-reader that was provided by Udacity
 
+## Launch application
+To launch the app you need to open your favorite (modern) browser and launch the `index.html` file from the root directory
+
+## Start application
+1. Open index.html in your favorite browser.
+2. Enjoy the Jasmine tests.
+
 ## RSS Feeds Test
 1. Checks if the **Feed** is loaded
 2. Checks if the url of the feed items are available
