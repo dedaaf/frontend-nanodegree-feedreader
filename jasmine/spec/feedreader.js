@@ -74,8 +74,8 @@ $(function() {
         it('toggles when icon is clicked', function() {
 
             btn.click(); //show menu
-            body = $('body').hasClass('');
-            expect(body).toBeTruthy();
+            body = $('body').hasClass('menu-hidden');
+            expect(body).toBeFalsy();
 
             btn.click(); //hide menu
             body = $('body').hasClass('menu-hidden');
